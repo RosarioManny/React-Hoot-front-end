@@ -20,6 +20,8 @@ const App = () => {
 
   const handleDeleteHoot = async (hootId) => {
     console.log('hootId', hootId);
+    setHoots(hoots.filter((hoot) => hoot._id !== hootId));
+    navigate('/hoots');
   };
   
   return (

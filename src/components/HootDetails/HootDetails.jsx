@@ -38,7 +38,7 @@ const HootDetails = (props) => {
             </p>
             {hoot.author._id === user._id && (
                 <>
-                    <button>Delete</button>
+                   <button onClick={() => props.handleDeleteHoot(hootId)}>Delete</button>
                 </>
             )}
             </header>
