@@ -29,6 +29,7 @@ const App = () => {
           )}
           <Route path="/signup" element={<SignupForm setUser={setUser} />} />
           <Route path="/signin" element={<SigninForm setUser={setUser} />} />
+          <Route path="/hoots/:hootId" element={<HootDetails />} />
         </Routes>
       </AuthedUserContext.Provider>
     </>
