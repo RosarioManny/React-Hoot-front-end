@@ -19,8 +19,9 @@ const HootDetails = (props) => {
     }, [hootId]);
 
     const handleAddComment = async (commentFormData) => {
-        console.log('commentFormData', commentFormData);
-      };
+        const newComment = await hootService.createComment(hootId, commentFormData);
+        setHoot({ ...hoot, comments: [...hoot.comments, newComment] });
+    };
           
     
     if (!hoot) return <main>Loading...</main>;
