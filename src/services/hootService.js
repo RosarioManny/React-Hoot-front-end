@@ -39,9 +39,9 @@ const show = async (hootId) => {
     }
   };
   export {
-    index,
+    // index,
     show,
-    create,
+    // create,
     createComment,
     deleteHoot,
   };
