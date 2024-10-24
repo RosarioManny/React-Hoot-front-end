@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import * as hootService from '../../services/hootService';
 import CommentForm from '../CommentForm/CommentForm';
@@ -38,6 +39,7 @@ const HootDetails = (props) => {
             </p>
             {hoot.author._id === user._id && (
                 <>
+                    <Link to={`/hoots/${hootId}/edit`}>Edit</Link>
                    <button onClick={() => props.handleDeleteHoot(hootId)}>Delete</button>
                 </>
             )}
