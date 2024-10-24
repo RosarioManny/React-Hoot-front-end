@@ -1,30 +1,34 @@
-import { useState, createContext, useEffect } from 'react';
-import { Routes, Route, useFetcher } from 'react-router-dom';
-import NavBar from './components/NavBar/NavBar';
-import Landing from './components/Landing/Landing';
-import Dashboard from './components/Dashboard/Dashboard';
-import SignupForm from './components/SignupForm/SignupForm';
-import SigninForm from './components/SigninForm/SigninForm';
-import HootForm from './components/HootForm/HootForm';
-import * as hootService from '../src/services/hootService';
-import * as authService from '../src/services/authService'; // import the authservice
+import { useState, createContext, useEffect } from "react";
+import { Routes, Route, useNavigate, useFetcher } from "react-router-dom";
+import NavBar from "./components/NavBar/NavBar";
+import Landing from "./components/Landing/Landing";
+import Dashboard from "./components/Dashboard/Dashboard";
+import SignupForm from "./components/SignupForm/SignupForm";
+import SigninForm from "./components/SigninForm/SigninForm";
+import * as authService from "../src/services/authService"; 
+import * as hootService from "../src/services/hootService";
+import HootDetails from "./components/HootDetails/HootDetails";
+import HootForm from "./components/HootForm/HootForm";
 import HootList from './components/HootList/HootList';
-import HootDetails from './components/HootDetails/HootDetails';
 
 export const AuthedUserContext = createContext(null);
 
 const App = () => {
   const [user, setUser] = useState(authService.getUser()); // using the method from authservice
-
   const [hoots, setHoots]= useState([]);
 
-useEffect(() => {
-  const fetchAllHoots = async () => {
-    const hootsData = await hootService.index();
-    setHoots(hootsData);
+  useEffect(() => {
+    const fetchAllHoots = async () => {
+      const hootsData = await hootService.index();
+      setHoots(hootsData);
+    };
+    if (user) fetchAllHoots();
+  }, [user]);
+
+  const handleAddHoot = async (hootFormData) => {
+    console.log("hootFormData", hootFormData);
+    navigate("/hoots");
   };
-  if (user) fetchAllHoots();
-}, [user]);
 
 
   const handleSignout = () => {
@@ -33,15 +37,21 @@ useEffect(() => {
   };
 
   const handleDeleteHoot = async (hootId) => {
-    console.log('hootId', hootId);
+    console.log("hootId", hootId);
     setHoots(hoots.filter((hoot) => hoot._id !== hootId));
-    navigate('/hoots');
+    navigate("/hoots");
   };
 
   const handleUpdateHoot = async (hootId, hootFormData) => {
     console.log('hootId:', hootId, 'hootFormData:', hootFormData);
     navigate(`/hoots/${hootId}`);
   };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    props.handleAddHoot(formData);
+  };
+
   return (
     <>
       <AuthedUserContext.Provider value={user}>
@@ -49,9 +59,13 @@ useEffect(() => {
         <Routes>
           {user ? (
             <>
-            <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/hoots" element={<HootList hoots={hoots} />} />
               <Route path="/hoots/:hootId/edit" element={<HootForm />} />
+              <Route path="/" element={<Dashboard user={user} />} />
+              <Route
+                path="/hoots/new"
+                element={<HootForm handleAddHoot={handleAddHoot} />}
+              />
             </>
           ) : (
             <Route path="/" element={<Landing />} />
