@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { AuthedUserContext } from '../../App';
-import { useContext } from 'react';
+import { Link } from "react-router-dom";
+import { AuthedUserContext } from "../../App";
+import { useContext } from "react";
 
 const NavBar = ({ handleSignout }) => {
   const user = useContext(AuthedUserContext);
@@ -12,6 +12,11 @@ const NavBar = ({ handleSignout }) => {
             <li>Welcome, {user.username}</li>
             <li>
               <Link to="/">Dashboard</Link>
+            </li>
+            <li>
+              <Link to='/hoots'>HOOTS</Link>
+              <Link to="/hoots/new">NEW HOOT</Link>
+
             </li>
             <li>
               <Link to="" onClick={handleSignout}>
