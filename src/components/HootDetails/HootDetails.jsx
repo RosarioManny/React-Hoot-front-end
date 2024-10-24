@@ -1,6 +1,5 @@
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { useState, useEffect, useContext} from 'react';
 import * as hootService from '../../services/hootService';
 import CommentForm from '../CommentForm/CommentForm';
 import { AuthedUserContext } from '../../App';

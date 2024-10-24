@@ -53,8 +53,9 @@ const show = async (hootId) => {
     }
   };
   export {
-    index,
+    // index,
     show,
+    // create,
     createComment,
     deleteHoot,
   };
